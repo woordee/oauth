@@ -2,7 +2,7 @@
     "name": "transn/oauth",
     "description": "a library for wechat,alipay,QQ,weibo OAuth2 Client",
     "type": "library",
-    "license": "MIT"
+    "license": "MIT",
     "minimum-stability": "beta",
     "require": {
         "php": "> 7.0",
