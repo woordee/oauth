@@ -1,0 +1,16 @@
+{
+    "name": "transn/oauth",
+    "description": "a library for wechat,alipay,QQ,weibo OAuth2 Client",
+    "type": "library",
+    "license": "MIT"
+    "minimum-stability": "beta",
+    "require": {
+        "php": "> 7.0",
+        "guzzlehttp/guzzle": "^7.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OAuth\\": "src"
+        }
+    }
+}
