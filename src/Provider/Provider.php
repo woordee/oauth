@@ -1,9 +1,8 @@
 <?php
 
-namespace CnOAuth\Provider;
+namespace OAuth\Provider;
 
-use CnOAuth\AccessToken\AccessToken;
-use Psr\Http\Message\ResponseInterface;
+use OAuth\AccessToken\AccessToken;
 
 /**
  * OAuth2 服务提供者接口

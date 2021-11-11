@@ -1,6 +1,8 @@
 <?php
 
-namespace CnOAuth\Provider;
+namespace OAuth\Provider\User;
+
+use OAuth\Provider\ResourceOwner;
 
 class WechatUser extends ResourceOwner
 {

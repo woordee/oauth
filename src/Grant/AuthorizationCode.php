@@ -1,8 +1,7 @@
 <?php
+namespace OAuth\Grant;
 
-namespace CnOAuth\Grant;
-
-abstract class AuthorizationCode extends AbstractGrant
+abstract class AuthorizationCode
 {
 
     /**
@@ -12,7 +11,7 @@ abstract class AuthorizationCode extends AbstractGrant
 
     public function __construct($options = [])
     {
-        $this->code = isset($options['code']) ? $options['code'] : $this->getDefaultCode();
+        $this->code = isset($options['code']) ? $options['code'] : '';
     }
 
     /**
@@ -23,13 +22,7 @@ abstract class AuthorizationCode extends AbstractGrant
         return 'authorization_code';
     }
 
-    public function prepareRequestParameters(array $defaults, array $options)
-    {
-        $options['grant_type'] = $this->getName();
-        $options['code'] = isset($options['code']) ? $options['code'] : $this->getCode();
-
-        return $options;
-    }
+    abstract public function prepareRequestParameters(array $defaults, array $options);
 
     /**
      * get code
@@ -51,13 +44,6 @@ abstract class AuthorizationCode extends AbstractGrant
     {
         $this->code = $code;
     }
-
-    /**
-     * get default code
-     *
-     * @return string
-     */
-    abstract public function getDefaultCode();
 
     /**
      * @inheritdoc

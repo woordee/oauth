@@ -1,6 +1,7 @@
 <?php
+namespace OAuth\Provider\User;
 
-namespace CnOAuth\Provider;
+use OAuth\Provider\ResourceOwner;
 
 class AlipayUser extends ResourceOwner
 {
@@ -17,17 +18,5 @@ class AlipayUser extends ResourceOwner
     public function getPicture()
     {
         return $this->data['avatar'];
-    }
-
-    public function getSex()
-    {
-        switch ($this->data['gender']) {
-            case 'F':
-                return 2;
-            case 'M':
-                return 1;
-            default:
-                return 0;
-        }
     }
 }

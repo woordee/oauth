@@ -1,13 +1,12 @@
 <?php
+namespace OAuth\Grant;
 
-namespace CnOAuth\Grant;
+class AlipayAuthorizationCode extends AuthorizationCode{
 
-use CnOAuth\Tool\AlipaySign;
-
-class AlipayAuthroizationCode extends AuthorizationCode
-{
-    public function getDefaultCode()
-    {
-        return isset($_GET['auth_code']) ? $_GET['auth_code'] : null;
-    }
+	public function prepareRequestParameters(array $defaults, array $options){
+		$options['grant_type'] = $this->getName();
+		$options['code'] = isset($options['code']) ? $options['code'] : $this->getCode();
+		
+		return $options;
+	}
 }

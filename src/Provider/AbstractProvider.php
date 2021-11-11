@@ -1,6 +1,6 @@
 <?php
 
-namespace CnOAuth\Provider;
+namespace OAuth\Provider;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
@@ -8,8 +8,8 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\BadResponseException;
 use UnexpectedValueException;
-use CnOAuth\AccessToken\AccessToken;
-use CnOAuth\Grant\AbstractGrant;
+use OAuth\AccessToken\AccessToken;
+use OAuth\Grant\AbstractGrant;
 
 /**
  * 服务提供者抽象类
@@ -81,17 +81,7 @@ abstract class AbstractProvider implements Provider
         return $options;
     }
 
-    public function getGrant($type)
-    {
-        switch ($type) {
-            case 'authorization':
-                return $this->getAuthorizationGrant();
-            default:
-                throw new \Exception('unknow grant type');
-        }
-    }
-
-    abstract public function getAuthorizationGrant();
+    abstract public function getAuthorizationGrant(string $code);
 
 
     /**
@@ -106,8 +96,6 @@ abstract class AbstractProvider implements Provider
      */
     public function getAccessToken($grant, array $options = [])
     {
-        $this->verifyGrant($grant);
-
         $params = [
             'client_id'     => $this->clientId,
             'client_secret' => $this->clientSecret,
@@ -196,7 +184,7 @@ abstract class AbstractProvider implements Provider
      * @param  AbstractGrant $grant
      * @return AccessToken
      */
-    protected function createAccessToken(array $response, AbstractGrant $grant)
+    protected function createAccessToken(array $response)
     {
         return new AccessToken($response);
     }
@@ -241,13 +229,6 @@ abstract class AbstractProvider implements Provider
                 'query' => $options
             ];
         }
-    }
-
-    /**
-     * 验证grant type
-     */
-    public function verifyGrant()
-    {
     }
 
     abstract public function getBaseAuthorizationUrl();

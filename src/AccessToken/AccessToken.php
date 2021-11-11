@@ -1,6 +1,6 @@
 <?php
 
-namespace CnOAuth\AccessToken;
+namespace OAuth\AccessToken;
 
 use InvalidArgumentException;
 use Exception;

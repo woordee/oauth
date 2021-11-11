@@ -1,6 +1,6 @@
 <?php
 
-namespace CnOAuth\Tool;
+namespace OAuth\Tool;
 
 use InvalidArgumentException;
 

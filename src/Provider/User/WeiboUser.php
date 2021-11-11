@@ -1,6 +1,7 @@
 <?php
+namespace OAuth\Provider\User;
 
-namespace CnOAuth\Provider;
+use OAuth\Provider\ResourceOwner;
 
 class WeiboUser extends ResourceOwner
 {

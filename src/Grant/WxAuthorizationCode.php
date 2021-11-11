@@ -1,8 +1,7 @@
 <?php
+namespace OAuth\Grant;
 
-namespace CnOAuth\Grant;
-
-class WxAuthroizationCode extends AuthorizationCode
+class WxAuthorizationCode extends AuthorizationCode
 {
     public function prepareRequestParameters(array $defaults, array $options)
     {
@@ -12,10 +11,5 @@ class WxAuthroizationCode extends AuthorizationCode
         $options['code'] = $this->getCode();
 
         return $options;
-    }
-
-    public function getDefaultCode()
-    {
-        return isset($_GET['code']) ? $_GET['code'] : null;
     }
 }
