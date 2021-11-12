@@ -9,6 +9,8 @@ class QQAuthorizationCode extends AuthorizationCode
         $options['client_secret'] = $defaults['client_secret'];
         $options['grant_type'] = $this->getName();
         $options['code'] = $this->getCode();
+        $options['redirect_uri'] = $defaults['redirect_uri'];
+        $options['fmt'] = 'json';
 
         return $options;
     }

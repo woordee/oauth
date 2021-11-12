@@ -21,6 +21,11 @@ abstract class ResourceOwner
      */
     public abstract function getId();
 
+    public function getUnionId()
+    {
+    	return isset($this->data['unionid']) ? $this->data['unionid'] : null;
+    }
+    
     /**
      * 返回用户信息数组
      *
@@ -28,6 +33,11 @@ abstract class ResourceOwner
      */
     public function toArray()
     {
-        return $this->data;
+        return [
+        	'openid' => $this->getId(),
+        	'nickname' => $this->getNickname(),
+        	'avatar' => $this->getAvatar(),
+        	'unionid' => $this->getUnionId()
+        ];
     }
 }

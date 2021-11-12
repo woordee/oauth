@@ -5,6 +5,7 @@ use OAuth\AccessToken\AccessToken;
 use OAuth\Provider\AbstractProvider;
 use OAuth\Provider\User\QQUser;
 use OAuth\Grant\QQAuthorizationCode;
+use GuzzleHttp\Psr7\Request;
 
 class QQ extends AbstractProvider{
 
@@ -32,14 +33,9 @@ class QQ extends AbstractProvider{
 		
 		return parent::getAccessTokenOptions($method, $options);
 	}
-
-	/**
-	 *
-	 * {@inheritdoc}
-	 */
-	protected function createAccessToken(array $response){
-		$response['resource_owner_id'] = $response['uid'];
-		return new AccessToken($response);
+	
+	public function getOpenIdDetailUrl(){
+		return 'https://graph.qq.com/oauth2.0/me';
 	}
 
 	/**
@@ -56,19 +52,37 @@ class QQ extends AbstractProvider{
 	 */
 	protected function getResourceOwnerDetailParams(AccessToken $accessToken){
 		return [
-			'access_token' => $accessToken->getToken(), 
-			'uid' => $accessToken->getUserId()];
+			'access_token' => $accessToken->getToken(),
+			'oauth_consumer_key' => $this->clientId,
+			'openid' => $accessToken->getUserId(),
+			'fmt' => 'json'
+		];
 	}
 
 	public function getAccessTokenMethod(){
 		return self::METHOD_GET;
 	}
 
+	public function prepareAccessTokenResponse(array $response){
+		$params = [
+			'access_token' => $response['access_token'],
+			'fmt' => 'json'
+		];
+		$method = $this->getAccessTokenMethod();
+		$url = $this->getOpenIdDetailUrl();
+		$options  = $this->getAccessTokenOptions($method, $params);
+		$request = new Request($method, $url);
+		$info = $this->getParsedResponse($request, $options);
+		$response['resource_owner_id'] = $info['openid'];
+		
+		return $response;
+	}
 	/**
 	 *
 	 * {@inheritdoc}
 	 */
 	public function createResourceOwner(array $response, AccessToken $token){
+		$response['openid'] = $token->getUserId();
 		return new QQUser($response);
 	}
 
@@ -77,8 +91,8 @@ class QQ extends AbstractProvider{
 	 * {@inheritdoc}
 	 */
 	public function checkResponse($response, $data){
-		if(isset($response['error_code'])){
-			throw new \Exception($response['error'], $response['error_code']);
+		if(isset($response['error'])){
+			throw new \Exception($response['error_description'], $response['error']);
 		}
 	}
 
@@ -91,7 +105,7 @@ class QQ extends AbstractProvider{
 	}
 
 	public function getDefaultScopes(){
-		return '';
+		return 'get_user_info';
 	}
 
 	public function getUserScope(){

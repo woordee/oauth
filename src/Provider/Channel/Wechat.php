@@ -52,7 +52,7 @@ class Wechat extends AbstractProvider{
 	}
 
 	public function getDefaultScopes(){
-		return 'snsapi_base';
+		return 'snsapi_login';
 	}
 
 	public function getUserScope(){

@@ -11,23 +11,13 @@ class WechatUser extends ResourceOwner
         return $this->data['openid'];
     }
 
-    public function getUnionId()
-    {
-        return isset($this->data['unionid']) ? $this->data['unionid'] : null;
-    }
-
-    public function getUserName()
+    public function getNickName()
     {
         return !empty($this->data['nickname']) ? $this->data['nickname'] : '';
     }
 
-    public function getPicture()
+    public function getAvatar()
     {
-        return $this->data['headimgurl'];
-    }
-
-    public function getSex()
-    {
-        return $this->data['sex'];
+        return $this->data['headimgurl']??'';
     }
 }

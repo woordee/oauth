@@ -12,6 +12,6 @@ class WeiboUser extends ResourceOwner
 
     public function __get($field)
     {
-        return $this->data[$field];
+        return $this->data[$field]??'';
     }
 }

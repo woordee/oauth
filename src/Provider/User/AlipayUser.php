@@ -10,12 +10,12 @@ class AlipayUser extends ResourceOwner
         return $this->data['user_id'];
     }
 
-    public function getUserName()
+    public function getNickName()
     {
         return !empty($this->data['nick_name']) ? $this->data['nick_name'] : '';
     }
 
-    public function getPicture()
+    public function getAvatar()
     {
         return $this->data['avatar'];
     }

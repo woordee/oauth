@@ -10,11 +10,6 @@ class QQUser extends ResourceOwner
 		return $this->data['openid'];
 	}
 	
-	public function getUnionId()
-	{
-		return isset($this->data['unionid']) ? $this->data['unionid'] : null;
-	}
-	
 	public function getNickName()
 	{
 		return !empty($this->data['nickname']) ? $this->data['nickname'] : '';
@@ -22,6 +17,6 @@ class QQUser extends ResourceOwner
 	
 	public function getAvatar()
 	{
-		return $this->data['figureurl_qq_2'];
+		return $this->data['figureurl_qq_2']??'';
 	}
 }
